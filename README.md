@@ -1,6 +1,6 @@
 # Laravel 8 Blog Api
 
-A laravel 8 rest api project for blog application.
+A laravel 8 rest api project for blog application..
 
 ## Get Started
 

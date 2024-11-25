@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+// /**
+//  * @method NewAccessToken createToken(string $name, array $abilities = ['*'])
+//  */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
@@ -20,8 +22,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'image',
         'password',
+        'bio',
+        'image',
+        'is_verified'
     ];
 
     /**
@@ -42,4 +46,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Get all the users that follow this user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function followers() {
+        return $this->hasMany(Follower::class, 'user_id');
+    }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

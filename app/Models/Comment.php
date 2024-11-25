@@ -11,13 +11,25 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'comment',
+        'post_id',
         'user_id',
-        'post_id'
+        'content'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected static function booted() {
+        static::created(function ($comment) {
+            $post = Post::find($comment->post_id);
+            $post->increment('comment_count'); // Tambahkan 1
+        });
+
+        static::deleted(function ($comment) {
+            $post = Post::find($comment->post_id);
+            $post->decrement('comment_count'); // Kurangi 1
+        });
     }
 }

@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `activities` (
-  `activity_id` int NOT NULL,
+  `id` int NOT NULL,
   `user_id` int NOT NULL,
   `action_type` enum('Y','N') NOT NULL,
   `target_user` int NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE `comments` (
 --
 
 CREATE TABLE `followers` (
-  `follower_id` int NOT NULL,
+  `id` int NOT NULL,
   `user_id` int NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -70,7 +70,7 @@ CREATE TABLE `followers` (
 --
 
 CREATE TABLE `likes` (
-  `likes_id` int NOT NULL,
+  `id` int NOT NULL,
   `post_id` int NOT NULL,
   `user_id` int NOT NULL,
   `created_at` datetime NOT NULL,
@@ -84,9 +84,9 @@ CREATE TABLE `likes` (
 --
 
 CREATE TABLE `posts` (
-  `post_id` int NOT NULL,
+  `id` int NOT NULL,
   `user_id` int NOT NULL,
-  `content` text NOT NULL,
+  `body` text NOT NULL,
   `like_count` int NOT NULL DEFAULT '0',
   `comment_count` int NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL,

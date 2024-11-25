@@ -11,14 +11,24 @@ class PostController extends Controller
     // get all posts
     public function index()
     {
-        return response([
-            'posts' => Post::orderBy('created_at', 'desc')->with('user:id,name,image')->withCount('comments', 'likes')
-            ->with('likes', function($like){
-                return $like->where('user_id', auth()->user()->id)
-                    ->select('id', 'user_id', 'post_id')->get();
-            })
-            ->get()
+        // return response()->json([
+        //     'posts' => Post::orderBy('created_at', 'desc')
+        //         ->with('user:id,name,image')
+        //         ->withCount('comments', 'likes')
+        //         ->with('likes', function($like) {
+        //             return $like->where('user_id', auth()->user()->id)
+        //                 ->select('id', 'user_id', 'post_id')->get();
+        //         })
+        //         ->get()
+        // ], 200);
+
+        return response()->json([
+            'posts' => Post::orderBy('created_at', 'desc')
+                ->with('user:id,name,image')
+                ->withCount('comments', 'likes')
+                ->get()
         ], 200);
+        
     }
 
     // get single post
@@ -37,12 +47,12 @@ class PostController extends Controller
             'body' => 'required|string'
         ]);
 
-        $image = $this->saveImage($request->image, 'posts');
+        // $image = $this->saveImage($request->image, 'posts');
 
         $post = Post::create([
             'body' => $attrs['body'],
             'user_id' => auth()->user()->id,
-            'image' => $image
+            // 'image' => $image
         ]);
 
         // for now skip for post image

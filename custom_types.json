@@ -1,0 +1,15 @@
+{
+  "Intelephense": {
+    "custom_types": {
+      "App\\Models\\User": {
+        "methods": {
+          "createToken": {
+            "return": {
+              "type": "NewAccessToken"
+            }
+          }
+        }
+      }
+    }
+  }
+}

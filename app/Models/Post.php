@@ -13,9 +13,11 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'body',
         'user_id',
-        'image'
+        'body',
+        'image',
+        'like_count',
+        'comment_count'
     ];
 
     public function user()

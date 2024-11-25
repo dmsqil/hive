@@ -39,17 +39,18 @@ class CommentController extends Controller
 
         //validate fields
         $attrs = $request->validate([
-            'comment' => 'required|string'
+            'content' => 'required|string'
         ]);
 
         Comment::create([
-            'comment' => $attrs['comment'],
+            'content' => $attrs['content'],
             'post_id' => $id,
             'user_id' => auth()->user()->id
         ]);
 
         return response([
-            'message' => 'Comment created.'
+            'message' => 'Comment created.',
+            'comment' => Comment::with('user:id,name,image')->latest()->first()
         ], 200);
     }
 
@@ -74,15 +75,16 @@ class CommentController extends Controller
 
         //validate fields
         $attrs = $request->validate([
-            'comment' => 'required|string'
+            'content' => 'required|string'
         ]);
 
         $comment->update([
-            'comment' => $attrs['comment']
+            'content' => $attrs['content']
         ]);
 
         return response([
-            'message' => 'Comment updated.'
+            'message' => 'Comment updated.',
+            'comment' => Comment::with('user:id,name,image')->find($id)
         ], 200);
     }
 
@@ -104,11 +106,13 @@ class CommentController extends Controller
                 'message' => 'Permission denied.'
             ], 403);
         }
+        $logData = $comment;
 
         $comment->delete();
 
         return response([
-            'message' => 'Comment deleted.'
+            'message' => 'Comment deleted.',
+            'comment' => $logData
         ], 200);
     }
 }

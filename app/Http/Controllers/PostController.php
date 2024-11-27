@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -25,7 +26,7 @@ class PostController extends Controller
         return response()->json([
             'posts' => Post::orderBy('created_at', 'desc')
                 ->with('user:id,name,image')
-                ->withCount('comments', 'likes')
+                // ->withCount('comments', 'likes') // f
                 ->get()
         ], 200);
         
@@ -35,7 +36,13 @@ class PostController extends Controller
     public function show($id)
     {
         return response([
-            'post' => Post::where('id', $id)->withCount('comments', 'likes')->get()
+            'post' => Post::orderBy('created_at', 'desc')->with('user:id,name,image')
+            // ->withCount('comments', 'likes') // tidak diperlukan, sudah ada handle like_count & comment_count
+            // ->with('likes', function($like) {
+            //     return $like->where('user_id', Auth::user()->id)
+            //         ->select('id', 'user_id', 'post_id')->get();
+            // }) // hitung jumlah likes
+            ->get()
         ], 200);
     }
 
@@ -47,12 +54,12 @@ class PostController extends Controller
             'body' => 'required|string'
         ]);
 
-        // $image = $this->saveImage($request->image, 'posts');
+        $image = $this->saveImage($request->image, 'posts');
 
         $post = Post::create([
             'body' => $attrs['body'],
             'user_id' => auth()->user()->id,
-            // 'image' => $image
+            'image' => $image
         ]);
 
         // for now skip for post image

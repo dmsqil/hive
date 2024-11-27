@@ -26,7 +26,7 @@ class PostController extends Controller
         return response()->json([
             'posts' => Post::orderBy('created_at', 'desc')
                 ->with('user:id,name,image')
-                ->withCount('comments', 'likes')
+                // ->withCount('comments', 'likes') // f
                 ->get()
         ], 200);
         
@@ -38,10 +38,10 @@ class PostController extends Controller
         return response([
             'post' => Post::orderBy('created_at', 'desc')->with('user:id,name,image')
             // ->withCount('comments', 'likes') // tidak diperlukan, sudah ada handle like_count & comment_count
-            ->with('likes', function($like) {
-                return $like->where('user_id', Auth::user()->id)
-                    ->select('id', 'user_id', 'post_id')->get();
-            }) // hitung jumlah likes
+            // ->with('likes', function($like) {
+            //     return $like->where('user_id', Auth::user()->id)
+            //         ->select('id', 'user_id', 'post_id')->get();
+            // }) // hitung jumlah likes
             ->get()
         ], 200);
     }

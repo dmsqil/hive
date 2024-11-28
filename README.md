@@ -1,17 +1,14 @@
-# Laravel 8 Blog Api
+# hive_papb
 
-A laravel 8 rest api project for blog application..
+Pengembangan Aplikasi Perangkat Bergerak
 
-## Get Started
+Kelas: B
+Kelompok : 2
 
- - clone or fork the repo
- - copy .env.exmaple file `copy .env.example .env`
- - generate app key `php artisan key:generate`
- - add database credentials
- - install dependencies `composer install`
- - link storage `php artisan storage:link`
- - run migration `php artisan migrate`
+Nama Anggota Kelompok :
 
-Running on a specific ip `php artisan serv --host <YOUR_IP> --port <YOUR_PORT>`
-
-A flutter application was developed for this api, you can get it [Here](https://github.com/habibmhamadi/flutter-blog-app)
+Hanif Al Aslam | H1101221001
+Nazarudin | H1101221005
+Erin Prastiwi | H110122109
+Celtha Missella | H1101221015
+Dimas Aqil Salsabil | H1101221057
